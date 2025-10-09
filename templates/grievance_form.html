@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-warning">
+                <h2 class="mb-0"><i class="fas fa-file-alt me-2"></i>File a Grievance</h2>
+            </div>
+            <div class="card-body">
+                <p>Use this form to submit your grievances or concerns to the panchayat. Your submission will be reviewed and addressed promptly.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Grievance Submission Form</h4>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('submit_grievance') }}" method="post">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="contact" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="contact" name="contact" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Grievance Category</label>
+                        <select class="form-select" id="category" name="category" required>
+                            <option value="" selected disabled>Select a category</option>
+                            <option value="Water Supply">Water Supply</option>
+                            <option value="Sanitation">Sanitation</option>
+                            <option value="Roads">Roads</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Public Services">Public Services</option>
+                            <option value="Land Disputes">Land Disputes</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Grievance Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="5" required></textarea>
+                        <div class="form-text">Please provide detailed information about your grievance.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="attachment" class="form-label">Attachment (optional)</label>
+                        <input type="file" class="form-control" id="attachment" name="attachment">
+                        <div class="form-text">You can attach photos or documents related to your grievance.</div>
+                    </div>
+                    
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="consent" required>
+                        <label class="form-check-label" for="consent">I confirm that the information provided is accurate and true.</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Submit Grievance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">How It Works</h4>
+            </div>
+            <div class="card-body">
+                <ol>
+                    <li>Fill out the grievance form with accurate details</li>
+                    <li>Submit the form</li>
+                    <li>Receive a tracking ID via SMS</li>
+                    <li>Your grievance is reviewed by concerned officials</li>
+                    <li>Track the status of your grievance online</li>
+                    <li>Receive updates on resolution</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Contact Information</h4>
+            </div>
+            <div class="card-body">
+                <p><i class="fas fa-phone me-2"></i> Helpline: 1800-XXX-XXXX</p>
+                <p><i class="fas fa-envelope me-2"></i> Email: grievance@grampanchayat.gov.in</p>
+                <p><i class="fas fa-clock me-2"></i> Office Hours: 9:00 AM - 5:00 PM</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

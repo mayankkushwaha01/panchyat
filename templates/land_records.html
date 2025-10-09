@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-info">
+                <h2 class="mb-0"><i class="fas fa-landmark me-2"></i>Blockchain-Based Land Records</h2>
+            </div>
+            <div class="card-body">
+                <p>Our panchayat uses blockchain technology to ensure the integrity and transparency of land ownership records. Each record is cryptographically secured and can be verified.</p>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i> Search for your land record using the survey number or owner name.
+                </div>
+                
+                <form class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="Search by owner name or survey number">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Land Records</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Owner</th>
+                                <th>Area</th>
+                                <th>Location</th>
+                                <th>Survey Number</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in records %}
+                            <tr>
+                                <td>{{ record.owner }}</td>
+                                <td>{{ record.area }}</td>
+                                <td>{{ record.location }}</td>
+                                <td>{{ record.survey_number }}</td>
+                                <td>
+                                    {% if record.verified %}
+                                    <span class="badge bg-success">Verified</span>
+                                    {% else %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ url_for('verify_land', record_id=record.id) }}" class="btn btn-sm btn-info">
+                                        <i class="fas fa-search"></i> Verify
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">About Blockchain Land Records</h4>
+            </div>
+            <div class="card-body">
+                <p>Our blockchain-based land record system offers several advantages:</p>
+                <ul>
+                    <li><strong>Immutability:</strong> Once recorded, land records cannot be altered without consensus.</li>
+                    <li><strong>Transparency:</strong> All transactions are visible to authorized parties.</li>
+                    <li><strong>Security:</strong> Cryptographic hashing ensures data integrity.</li>
+                    <li><strong>Reduced Disputes:</strong> Clear ownership records reduce land disputes.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

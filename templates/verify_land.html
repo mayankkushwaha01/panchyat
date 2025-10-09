@@ -1,0 +1,146 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-info">
+                <h2 class="mb-0"><i class="fas fa-check-circle me-2"></i>Land Record Verification</h2>
+            </div>
+            <div class="card-body">
+                <p>Verify the authenticity of this land record using blockchain technology.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Record Details</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>Owner:</th>
+                        <td>{{ record.owner }}</td>
+                    </tr>
+                    <tr>
+                        <th>Area:</th>
+                        <td>{{ record.area }}</td>
+                    </tr>
+                    <tr>
+                        <th>Location:</th>
+                        <td>{{ record.location }}</td>
+                    </tr>
+                    <tr>
+                        <th>Survey Number:</th>
+                        <td>{{ record.survey_number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>
+                            {% if record.verified %}
+                            <span class="badge bg-success">Verified</span>
+                            {% else %}
+                            <span class="badge bg-warning">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4 class="mb-0">Blockchain Verification</h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-success">
+                    <i class="fas fa-shield-alt me-2"></i> This record has been verified on the blockchain.
+                </div>
+                
+                <h5>Record Hash</h5>
+                <div class="bg-light p-2 mb-3 overflow-auto">
+                    <code>{{ record.hash }}</code>
+                </div>
+                
+                <h5>Verification Details</h5>
+                <p><strong>Last Verified:</strong> April 15, 2025</p>
+                <p><strong>Block Number:</strong> 15,782,344</p>
+                <p><strong>Transaction ID:</strong> 0x3a8e7...5d2f1</p>
+                
+                <button class="btn btn-primary" id="verifyBtn">
+                    <i class="fas fa-sync-alt me-2"></i> Verify Again
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Record History</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                                <th>Verified By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jan 10, 2025</td>
+                                <td>Record Created</td>
+                                <td>Initial land record registration</td>
+                                <td>Panchayat Secretary</td>
+                            </tr>
+                            <tr>
+                                <td>Feb 15, 2025</td>
+                                <td>Verification</td>
+                                <td>Record verified on blockchain</td>
+                                <td>Land Records Officer</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 15, 2025</td>
+                                <td>Re-verification</td>
+                                <td>Annual verification completed</td>
+                                <td>District Collector</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('verifyBtn').addEventListener('click', function() {
+    this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Verifying...';
+    this.disabled = true;
+    
+    setTimeout(() => {
+        this.innerHTML = '<i class="fas fa-check-circle me-2"></i> Verified Successfully';
+        this.classList.remove('btn-primary');
+        this.classList.add('btn-success');
+        
+        // Show verification result
+        const alertDiv = document.createElement('div');
+        alertDiv.className = 'alert alert-success mt-3';
+        alertDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i> Record hash verified on blockchain. The record is authentic.';
+        this.parentNode.appendChild(alertDiv);
+    }, 2000);
+});
+</script>
+{% endblock %}

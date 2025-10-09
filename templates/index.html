@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pages/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section text-center" data-aos="fade-up">
+    <div class="container">
+        <h1 class="display-4">Gram Panchayat E-Governance Portal</h1>
+        <p class="lead">Empowering rural communities through digital transparency and efficient governance</p>
+        <div class="mt-4">
+            <a href="{{ url_for('projects') }}" class="btn btn-light me-2"><i class="fas fa-tasks me-2"></i>View Projects</a>
+            <a href="{{ url_for('grievance_form') }}" class="btn btn-warning"><i class="fas fa-file-alt me-2"></i>File Grievance</a>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard Stats -->
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="text-center mb-4" data-aos="fade-up">Dashboard Overview</h2>
+        </div>
+    </div>
+
+<div class="row mb-4">
+    <div class="col-md-6" data-aos="fade-right" data-aos-delay="100">
+        <div class="card h-100">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-chart-pie me-2"></i>Budget Overview</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="budgetChart"></canvas>
+                <div class="mt-4">
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <h5 class="text-primary">₹{{ "{:,.2f}".format(budget.total) }}</h5>
+                            <p class="text-muted mb-0"><small>Total Budget</small></p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <h5 class="text-success">₹{{ "{:,.2f}".format(budget.allocated) }}</h5>
+                            <p class="text-muted mb-0"><small>Allocated</small></p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <h5 class="text-info">₹{{ "{:,.2f}".format(budget.remaining) }}</h5>
+                            <p class="text-muted mb-0"><small>Remaining</small></p>
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{{ url_for('budget') }}" class="btn btn-primary">View Detailed Budget</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6" data-aos="fade-left" data-aos-delay="200">
+        <div class="card h-100">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-tasks me-2"></i>Ongoing Projects</h3>
+            </div>
+            <div class="card-body">
+                {% for project in projects[:2] %}
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="mb-0">{{ project.name }}</h5>
+                        <span class="badge bg-info">{{ project.status }}</span>
+                    </div>
+                    <p class="text-muted">{{ project.description }}</p>
+                    <div class="progress mb-2" style="height: 10px;">
+                        <div class="progress-bar" role="progressbar" style="width: {{ project.completion }}%;" aria-valuenow="{{ project.completion }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <small class="text-muted">Progress</small>
+                        <small class="text-muted">{{ project.completion }}%</small>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('projects') }}" class="btn btn-primary">View All Projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-file-alt me-2"></i>File a Grievance</h3>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-comments fa-4x text-warning mb-3"></i>
+                    <h4>Have a concern?</h4>
+                    <p class="text-muted">Submit your grievances and track their status through our transparent system.</p>
+                </div>
+                <a href="{{ url_for('grievance_form') }}" class="btn btn-warning"><i class="fas fa-paper-plane me-2"></i>File Grievance</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+        <div class="card h-100">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="card-title mb-0"><i class="fas fa-landmark me-2"></i>Land Records</h3>
+            </div>
+            <div class="card-body text-center">
+                <div class="mb-4">
+                    <i class="fas fa-file-contract fa-4x text-info mb-3"></i>
+                    <h4>Verify Land Records</h4>
+                    <p class="text-muted">Access and verify your land records using our secure blockchain-based system.</p>
+                </div>
+                <a href="{{ url_for('land_records') }}" class="btn btn-info"><i class="fas fa-search me-2"></i>View Land Records</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script>
+    // Pass data from Flask to JavaScript
+    const budgetCategories = [
+        {% for category in budget.categories %}
+        {
+            name: '{{ category.name }}',
+            amount: {{ category.amount }}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+</script>
+<script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% endblock %}

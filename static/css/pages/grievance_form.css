@@ -1,0 +1,10 @@
+/* Grievance form page specific styles */
+.form-section {
+    margin-bottom: 2rem;
+}
+
+.form-help {
+    background-color: #f8f9fa;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}

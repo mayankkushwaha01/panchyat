@@ -1,0 +1,4 @@
+/* Index page specific styles */
+.progress-bar {
+    transition: width 0.3s ease;
+}

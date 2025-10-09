@@ -1,0 +1,13 @@
+/* Land records page specific styles */
+.search-container {
+    margin-bottom: 2rem;
+}
+
+.record-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.record-row:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
