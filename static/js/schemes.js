@@ -3,15 +3,31 @@ document.addEventListener('DOMContentLoaded', function() {
     const schemeSearch = document.getElementById('scheme-search');
     const searchResults = document.getElementById('search-results');
     const resultsContainer = document.getElementById('results-container');
+    const schemesContainer = document.getElementById('schemes-container');
     
-    // Add animation to scheme cards on load
-    const schemeCards = document.querySelectorAll('.scheme-card');
-    schemeCards.forEach((card, index) => {
-        setTimeout(() => {
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100 * index);
-    });
+    // Load schemes data from JSON file
+    fetch('../static/data/schemes.json')
+        .then(response => response.json())
+        .then(schemes => {
+            // Render schemes
+            renderSchemes(schemes);
+            
+            // Add animation to scheme cards on load
+            const schemeCards = document.querySelectorAll('.scheme-card');
+            schemeCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Setup search functionality
+            setupSearch(schemes);
+        })
+        .catch(error => {
+            console.error('Error loading schemes data:', error);
+            schemesContainer.innerHTML = '<div class="alert alert-danger">Failed to load schemes data. Please try again later.</div>';
+        });
     
     // Random icon assignment for scheme cards
     const icons = [
@@ -19,48 +35,86 @@ document.addEventListener('DOMContentLoaded', function() {
         'fa-graduation-cap', 'fa-heartbeat', 'fa-tractor', 'fa-hand-holding-usd'
     ];
     
-    document.querySelectorAll('.scheme-icon').forEach(icon => {
-        const randomIcon = icons[Math.floor(Math.random() * icons.length)];
-        icon.classList.remove('fa-award');
-        icon.classList.add(randomIcon);
-    });
+    function renderSchemes(schemes) {
+        schemesContainer.innerHTML = '';
+        
+        schemes.forEach(scheme => {
+            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            
+            const schemeCard = document.createElement('div');
+            schemeCard.className = 'col-md-6 mb-4';
+            schemeCard.innerHTML = `
+                <div class="card scheme-card">
+                    <div class="card-header">
+                        <h4 class="mb-0">${scheme.name}</h4>
+                    </div>
+                    <div class="card-body">
+                        <i class="fas ${randomIcon} scheme-icon"></i>
+                        
+                        <div class="scheme-detail">
+                            <p><i class="fas fa-info-circle scheme-detail-icon"></i><strong>Description:</strong> ${scheme.description}</p>
+                        </div>
+                        
+                        <div class="scheme-detail">
+                            <p><i class="fas fa-user-check scheme-detail-icon"></i><strong>Eligibility:</strong> ${scheme.eligibility}</p>
+                        </div>
+                        
+                        <div class="scheme-detail">
+                            <p><i class="fas fa-gift scheme-detail-icon"></i><strong>Benefits:</strong> ${scheme.benefits}</p>
+                        </div>
+                        
+                        <div class="mt-4 text-center">
+                            <a href="${scheme.link}" target="_blank" class="btn scheme-btn pulse-animation">
+                                <i class="fas fa-external-link-alt me-2"></i>Visit Official Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            schemesContainer.appendChild(schemeCard);
+        });
+    }
     
-    if (searchBtn && schemeSearch) {
-        searchBtn.addEventListener('click', function() {
-            const query = schemeSearch.value.trim();
-            if (query) {
-                // Show loading indicator
-                resultsContainer.innerHTML = '<div class="text-center p-4"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Searching schemes...</p></div>';
-                searchResults.classList.remove('d-none');
-                
-                // Simulate search delay for better UX
-                setTimeout(() => {
-                    // In a real application, this would make an API call
-                    // For now, we'll just filter the existing schemes
-                    let found = false;
-                    resultsContainer.innerHTML = '';
+    function setupSearch(schemes) {
+        if (searchBtn && schemeSearch) {
+            searchBtn.addEventListener('click', function() {
+                const query = schemeSearch.value.trim();
+                if (query) {
+                    // Show loading indicator
+                    resultsContainer.innerHTML = '<div class="text-center p-4"><i class="fas fa-spinner fa-spin fa-2x"></i><p class="mt-2">Searching schemes...</p></div>';
+                    searchResults.classList.remove('d-none');
                     
-                    schemeCards.forEach(card => {
-                        const title = card.querySelector('.card-header h4').textContent.toLowerCase();
-                        const description = card.querySelector('.scheme-detail:nth-child(2)').textContent.toLowerCase();
+                    // Simulate search delay for better UX
+                    setTimeout(() => {
+                        // Filter schemes based on search query
+                        let found = false;
+                        resultsContainer.innerHTML = '';
+                        
+                        schemes.forEach(scheme => {
+                            const title = scheme.name.toLowerCase();
+                            const description = scheme.description.toLowerCase();
                         
                         if (title.includes(query.toLowerCase()) || description.includes(query.toLowerCase())) {
                             found = true;
-                            const clone = card.cloneNode(true);
-                            clone.classList.add('mb-3');
-                            clone.style.opacity = '0';
-                            clone.style.transform = 'translateY(20px)';
-                            resultsContainer.appendChild(clone);
                             
-                            setTimeout(() => {
-                                clone.style.opacity = '1';
-                                clone.style.transform = 'translateY(0)';
-                            }, 100);
+                            // Create a result card
+                            const resultItem = document.createElement('div');
+                            resultItem.className = 'list-group-item';
+                            resultItem.innerHTML = `
+                                <h5 class="mb-1">${scheme.name}</h5>
+                                <p class="mb-1">${scheme.description}</p>
+                                <a href="${scheme.link}" target="_blank" class="btn btn-sm btn-primary mt-2">
+                                    <i class="fas fa-external-link-alt me-1"></i>Visit Website
+                                </a>
+                            `;
+                            
+                            resultsContainer.appendChild(resultItem);
                         }
                     });
                     
                     if (!found) {
-                        resultsContainer.innerHTML = '<div class="alert alert-info"><i class="fas fa-info-circle me-2"></i>No schemes found matching your search.</div>';
+                        resultsContainer.innerHTML = '<div class="alert alert-info">No schemes found matching your search criteria.</div>';
                     }
                 }, 500);
             }

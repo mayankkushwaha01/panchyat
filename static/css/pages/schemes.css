@@ -13,7 +13,7 @@
 }
 
 .scheme-card .card-header {
-    background: linear-gradient(135deg, #43a047, #2e7d32);
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     color: white;
     font-weight: 600;
     border: none;
@@ -28,13 +28,13 @@
 .scheme-icon {
     font-size: 2.5rem;
     margin-bottom: 15px;
-    color: #43a047;
+    color: #6a11cb;
     text-align: center;
     display: block;
 }
 
 .scheme-btn {
-    background: linear-gradient(135deg, #43a047, #2e7d32);
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     border: none;
     border-radius: 30px;
     padding: 8px 20px;
