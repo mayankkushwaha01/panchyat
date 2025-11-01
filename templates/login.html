@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login - Panchayat E-Governance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        .login-header {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 2rem;
+            text-align: center;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card login-card">
+                    <div class="login-header">
+                        <i class="fas fa-landmark fa-3x mb-3"></i>
+                        <h2>Gram Panchayat Portal</h2>
+                        <p class="mb-0">Digital Governance for Rural India</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="state" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Select State
+                                </label>
+                                <select class="form-select" id="state" required>
+                                    <option value="">Choose State...</option>
+                                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                    <option value="Bihar">Bihar</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Kerala">Kerala</option>
+                                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Odisha">Odisha</option>
+                                    <option value="Punjab">Punjab</option>
+                                    <option value="Rajasthan">Rajasthan</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                    <option value="West Bengal">West Bengal</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="district" class="form-label">
+                                    <i class="fas fa-city me-2"></i>Select District
+                                </label>
+                                <select class="form-select" id="district" required disabled>
+                                    <option value="">First select a state...</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="panchayat" class="form-label">
+                                    <i class="fas fa-home me-2"></i>Select Panchayat
+                                </label>
+                                <select class="form-select" id="panchayat" required disabled>
+                                    <option value="">First select a district...</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="userType" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Login As
+                                </label>
+                                <select class="form-select" id="userType" required>
+                                    <option value="">Select User Type...</option>
+                                    <option value="citizen">Citizen</option>
+                                    <option value="official">Panchayat Official</option>
+                                    <option value="admin">Administrator</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="username" class="form-label">
+                                    <i class="fas fa-user-circle me-2"></i>Username/Mobile Number
+                                </label>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="password" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>Password
+                                </label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-login btn-primary w-100 mb-3">
+                                <i class="fas fa-sign-in-alt me-2"></i>Login to Dashboard
+                            </button>
+
+                            <div class="text-center">
+                                <small class="text-muted">
+                                    Don't have an account? <a href="#" class="text-primary">Register here</a>
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <small class="text-white">
+                        <i class="fas fa-shield-alt me-1"></i>
+                        Secure Digital Governance Platform
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const districts = {
+            "Uttar Pradesh": ["Agra", "Allahabad", "Lucknow", "Kanpur", "Varanasi", "Meerut"],
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad", "Solapur"],
+            "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga", "Purnia"],
+            "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar"],
+            "Karnataka": ["Bangalore", "Mysore", "Hubli", "Mangalore", "Belgaum", "Gulbarga"],
+            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Tiruchirappalli", "Salem", "Tirunelveli"],
+            "Rajasthan": ["Jaipur", "Jodhpur", "Kota", "Bikaner", "Ajmer", "Udaipur"],
+            "West Bengal": ["Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri", "Malda"],
+            "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry"],
+            "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Kollam", "Palakkad"],
+            "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain", "Sagar"],
+            "Haryana": ["Gurgaon", "Faridabad", "Panipat", "Ambala", "Yamunanagar", "Rohtak"],
+            "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Mohali"],
+            "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Brahmapur", "Sambalpur", "Puri"]
+        };
+
+        const panchayats = [
+            "Rampur Gram Panchayat", "Shivpur Gram Panchayat", "Krishnanagar Gram Panchayat",
+            "Sundarpur Gram Panchayat", "Madhavpur Gram Panchayat", "Govindpur Gram Panchayat"
+        ];
+
+        document.getElementById('state').addEventListener('change', function() {
+            const state = this.value;
+            const districtSelect = document.getElementById('district');
+            const panchayatSelect = document.getElementById('panchayat');
+            
+            districtSelect.innerHTML = '<option value="">Choose District...</option>';
+            panchayatSelect.innerHTML = '<option value="">First select a district...</option>';
+            panchayatSelect.disabled = true;
+            
+            if (state && districts[state]) {
+                districtSelect.disabled = false;
+                districts[state].forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            } else {
+                districtSelect.disabled = true;
+            }
+        });
+
+        document.getElementById('district').addEventListener('change', function() {
+            const district = this.value;
+            const panchayatSelect = document.getElementById('panchayat');
+            
+            panchayatSelect.innerHTML = '<option value="">Choose Panchayat...</option>';
+            
+            if (district) {
+                panchayatSelect.disabled = false;
+                panchayats.forEach(panchayat => {
+                    const option = document.createElement('option');
+                    option.value = panchayat;
+                    option.textContent = panchayat;
+                    panchayatSelect.appendChild(option);
+                });
+            } else {
+                panchayatSelect.disabled = true;
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const state = document.getElementById('state').value;
+            const district = document.getElementById('district').value;
+            const panchayat = document.getElementById('panchayat').value;
+            const userType = document.getElementById('userType').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Store user session data
+            sessionStorage.setItem('userSession', JSON.stringify({
+                state: state,
+                district: district,
+                panchayat: panchayat,
+                userType: userType,
+                username: username,
+                loginTime: new Date().toISOString()
+            }));
+
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+  </body>
+</html>

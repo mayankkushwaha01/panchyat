@@ -5,29 +5,93 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultsContainer = document.getElementById('results-container');
     const schemesContainer = document.getElementById('schemes-container');
     
-    // Load schemes data from JSON file
-    fetch('../static/data/schemes.json')
-        .then(response => response.json())
+    // Add loading animation
+    schemesContainer.innerHTML = `
+        <div class="text-center p-5">
+            <div class="spinner-grow text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-success fw-bold">Loading schemes data...</p>
+        </div>
+    `;
+    
+    // Load schemes data
+    loadSchemesData()
         .then(schemes => {
-            // Render schemes
-            renderSchemes(schemes);
-            
-            // Add animation to scheme cards on load
-            const schemeCards = document.querySelectorAll('.scheme-card');
-            schemeCards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, 100 * index);
-            });
-            
-            // Setup search functionality
-            setupSearch(schemes);
+            // Render schemes with a slight delay for better UX
+            setTimeout(() => {
+                renderSchemes(schemes);
+                
+                // Add animation to scheme cards on load
+                const schemeCards = document.querySelectorAll('.scheme-card');
+                schemeCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 150 * index);
+                });
+                
+                // Add hover effects after cards are loaded
+                addHoverEffects();
+                
+                // Add header animation
+                const schemeHeader = document.querySelector('.scheme-header');
+                if (schemeHeader) {
+                    schemeHeader.classList.add('animate__animated', 'animate__fadeIn');
+                }
+                
+                // Setup search functionality
+                setupSearch(schemes);
+            }, 800);
         })
         .catch(error => {
             console.error('Error loading schemes data:', error);
             schemesContainer.innerHTML = '<div class="alert alert-danger">Failed to load schemes data. Please try again later.</div>';
         });
+    
+    // Function to load schemes data
+    async function loadSchemesData() {
+        try {
+            const response = await fetch('../static/data/schemes.json');
+            if (!response.ok) {
+                throw new Error('Failed to fetch schemes');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error loading schemes:', error);
+            // Return hardcoded schemes as fallback
+            return [
+                {
+                    "name": "Pradhan Mantri Awas Yojana (PMAY)",
+                    "description": "Housing scheme to provide affordable housing to all eligible families by 2022.",
+                    "eligibility": "Families with annual income up to Rs. 3 lakhs, no house ownership.",
+                    "benefits": "Financial assistance up to Rs. 2.5 lakhs for house construction.",
+                    "link": "https://pmaymis.gov.in/"
+                },
+                {
+                    "name": "MGNREGA",
+                    "description": "Employment scheme guaranteeing 100 days of wage employment to rural households.",
+                    "eligibility": "Adult members of rural households willing to do unskilled manual work.",
+                    "benefits": "Legal guarantee of 100 days of employment in a financial year.",
+                    "link": "https://nrega.nic.in/"
+                },
+                {
+                    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+                    "description": "Income support scheme for farmers to supplement their financial needs.",
+                    "eligibility": "All small and marginal farmers with cultivable landholding.",
+                    "benefits": "Rs. 6,000 per year in three equal installments.",
+                    "link": "https://pmkisan.gov.in/"
+                },
+                {
+                    "name": "Swachh Bharat Mission (Gramin)",
+                    "description": "Campaign to improve sanitation facilities in rural areas.",
+                    "eligibility": "All rural households without toilets.",
+                    "benefits": "Financial assistance for toilet construction and waste management.",
+                    "link": "https://swachhbharatmission.gov.in/"
+                }
+            ];
+        }
+    }
     
     // Random icon assignment for scheme cards
     const icons = [
@@ -128,16 +192,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Add hover effect to scheme cards
-    schemeCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            const icon = this.querySelector('.scheme-icon');
-            icon.classList.add('fa-bounce');
+    // Add hover effect to scheme cards (will be applied after cards are loaded)
+    function addHoverEffects() {
+        const schemeCards = document.querySelectorAll('.scheme-card');
+        schemeCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.scheme-icon');
+                if (icon) icon.classList.add('fa-bounce');
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.scheme-icon');
+                if (icon) icon.classList.remove('fa-bounce');
+            });
         });
-        
-        card.addEventListener('mouseleave', function() {
-            const icon = this.querySelector('.scheme-icon');
-            icon.classList.remove('fa-bounce');
-        });
-    });
+    }
+    
+    // Call addHoverEffects after schemes are rendered
+    setTimeout(addHoverEffects, 1000);
 });

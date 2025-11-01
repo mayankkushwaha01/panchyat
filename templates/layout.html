@@ -9,25 +9,25 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <!-- Page-specific CSS -->
-    <!-- CSS will be included in individual pages -->
+    {% block page_css %}{% endblock %}
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html"><i class="fas fa-landmark"></i> Gram Panchayat Portal</a>
+        <a class="navbar-brand" href="/templates/index.html"><i class="fas fa-landmark"></i> Gram Panchayat Portal</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a class="nav-link active" aria-current="page" href="/templates/index.html">Home</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="schemes.html">Schemes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/templates/schemes.html">Schemes</a></li>
             <li class="nav-item">
-              <a class="nav-link" href="grievance_form.html">File Grievance</a>
+              <a class="nav-link" href="/templates/grievance_form.html">File Grievance</a>
             </li>
             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
           </ul>
@@ -36,11 +36,19 @@
     </nav>
 
     <main class="container mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
         
         <!-- Content from other pages will be injected here -->
-        <div id="content">
-            <!-- This is where page content will go -->
-        </div>
+        {% block content %}{% endblock %}
     </main>
 
     <footer class="text-center mt-5 py-4 bg-light border-top">
@@ -50,6 +58,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Page-specific JS -->
-    <!-- JS will be included in individual pages -->
+    {% block page_js %}{% endblock %}
   </body>
 </html>

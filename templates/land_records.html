@@ -1,96 +1,249 @@
-{% extends "layout.html" %}
-
-{% block content %}
-<div class="row mb-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header bg-info">
-                <h2 class="mb-0"><i class="fas fa-landmark me-2"></i>Blockchain-Based Land Records</h2>
-            </div>
-            <div class="card-body">
-                <p>Our panchayat uses blockchain technology to ensure the integrity and transparency of land ownership records. Each record is cryptographically secured and can be verified.</p>
-                
-                <div class="alert alert-info">
-                    <i class="fas fa-info-circle me-2"></i> Search for your land record using the survey number or owner name.
-                </div>
-                
-                <form class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Search by owner name or survey number">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary w-100">Search</button>
-                    </div>
-                </form>
-            </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Land Records - Panchayat E-Governance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card { border: none; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-5px); }
+        .container { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem; margin-top: 1rem; }
+        .btn { border-radius: 25px; transition: all 0.3s ease; }
+        .btn:hover { transform: translateY(-2px); }
+        .land-header { background: linear-gradient(135deg, #667eea, #764ba2); }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="index.html"><i class="fas fa-landmark"></i> Gram Panchayat Portal</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="schemes.html">Schemes</a></li>
+            <li class="nav-item"><a class="nav-link" href="grievance_form.html">File Grievance</a></li>
+            <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+            <li class="nav-item"><a class="nav-link active" href="land_records.html">Land Records</a></li>
+          </ul>
         </div>
-    </div>
-</div>
+      </div>
+    </nav>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">Land Records</h4>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Owner</th>
-                                <th>Area</th>
-                                <th>Location</th>
-                                <th>Survey Number</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for record in records %}
-                            <tr>
-                                <td>{{ record.owner }}</td>
-                                <td>{{ record.area }}</td>
-                                <td>{{ record.location }}</td>
-                                <td>{{ record.survey_number }}</td>
-                                <td>
-                                    {% if record.verified %}
-                                    <span class="badge bg-success">Verified</span>
-                                    {% else %}
-                                    <span class="badge bg-warning">Pending</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <a href="{{ url_for('verify_land', record_id=record.id) }}" class="btn btn-sm btn-info">
-                                        <i class="fas fa-search"></i> Verify
-                                    </a>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+    <main class="container mt-4">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header land-header text-white border-0">
+                        <h2 class="mb-0"><i class="fas fa-landmark me-2"></i>Land Records Management</h2>
+                    </div>
+                    <div class="card-body">
+                        <p>Access and manage land ownership records for our panchayat. All records are digitally maintained for transparency and easy verification.</p>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i> Search for your land record using the survey number or owner name.
+                        </div>
+                        
+                        <form class="row g-3 mb-4" id="searchForm">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Search by owner name or survey number">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="row mt-4">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0">About Blockchain Land Records</h4>
-            </div>
-            <div class="card-body">
-                <p>Our blockchain-based land record system offers several advantages:</p>
-                <ul>
-                    <li><strong>Immutability:</strong> Once recorded, land records cannot be altered without consensus.</li>
-                    <li><strong>Transparency:</strong> All transactions are visible to authorized parties.</li>
-                    <li><strong>Security:</strong> Cryptographic hashing ensures data integrity.</li>
-                    <li><strong>Reduced Disputes:</strong> Clear ownership records reduce land disputes.</li>
-                </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Land Records</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Owner</th>
+                                        <th>Area</th>
+                                        <th>Location</th>
+                                        <th>Survey Number</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recordsTable">
+                                    <tr>
+                                        <td>Rajesh Kumar</td>
+                                        <td>2.5 acres</td>
+                                        <td>Village Center</td>
+                                        <td>SN-001</td>
+                                        <td><span class="badge bg-success">Verified</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="verifyRecord('SN-001')">
+                                                <i class="fas fa-search"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Priya Sharma</td>
+                                        <td>1.8 acres</td>
+                                        <td>North Block</td>
+                                        <td>SN-002</td>
+                                        <td><span class="badge bg-success">Verified</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="verifyRecord('SN-002')">
+                                                <i class="fas fa-search"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amit Patel</td>
+                                        <td>3.2 acres</td>
+                                        <td>South Block</td>
+                                        <td>SN-003</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="verifyRecord('SN-003')">
+                                                <i class="fas fa-search"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunita Devi</td>
+                                        <td>1.5 acres</td>
+                                        <td>East Block</td>
+                                        <td>SN-004</td>
+                                        <td><span class="badge bg-success">Verified</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="verifyRecord('SN-004')">
+                                                <i class="fas fa-search"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mohan Singh</td>
+                                        <td>4.1 acres</td>
+                                        <td>West Block</td>
+                                        <td>SN-005</td>
+                                        <td><span class="badge bg-success">Verified</span></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-info" onclick="verifyRecord('SN-005')">
+                                                <i class="fas fa-search"></i> Verify
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-{% endblock %}
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">About Digital Land Records</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Our digital land record system offers several advantages:</p>
+                        <ul>
+                            <li><strong>Digital Storage:</strong> All records are stored digitally for easy access.</li>
+                            <li><strong>Transparency:</strong> Clear ownership information available to authorized users.</li>
+                            <li><strong>Quick Search:</strong> Find records instantly using owner name or survey number.</li>
+                            <li><strong>Reduced Disputes:</strong> Clear documentation helps reduce land disputes.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center mt-5 py-4 bg-light border-top">
+        <p>&copy; 2024 Your Gram Panchayat. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const landRecords = [
+            { owner: "Rajesh Kumar", area: "2.5 acres", location: "Village Center", surveyNumber: "SN-001", verified: true },
+            { owner: "Priya Sharma", area: "1.8 acres", location: "North Block", surveyNumber: "SN-002", verified: true },
+            { owner: "Amit Patel", area: "3.2 acres", location: "South Block", surveyNumber: "SN-003", verified: false },
+            { owner: "Sunita Devi", area: "1.5 acres", location: "East Block", surveyNumber: "SN-004", verified: true },
+            { owner: "Mohan Singh", area: "4.1 acres", location: "West Block", surveyNumber: "SN-005", verified: true }
+        ];
+
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderAllRecords();
+                return;
+            }
+
+            const filteredRecords = landRecords.filter(record => 
+                record.owner.toLowerCase().includes(searchTerm) || 
+                record.surveyNumber.toLowerCase().includes(searchTerm) ||
+                record.location.toLowerCase().includes(searchTerm)
+            );
+
+            renderRecords(filteredRecords);
+        });
+
+        function renderRecords(records) {
+            const tbody = document.getElementById('recordsTable');
+            tbody.innerHTML = '';
+
+            if (records.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center">No records found</td></tr>';
+                return;
+            }
+
+            records.forEach(record => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${record.owner}</td>
+                    <td>${record.area}</td>
+                    <td>${record.location}</td>
+                    <td>${record.surveyNumber}</td>
+                    <td>
+                        <span class="badge ${record.verified ? 'bg-success' : 'bg-warning'}">
+                            ${record.verified ? 'Verified' : 'Pending'}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-info" onclick="verifyRecord('${record.surveyNumber}')">
+                            <i class="fas fa-search"></i> Verify
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderAllRecords() {
+            renderRecords(landRecords);
+        }
+
+        function verifyRecord(surveyNumber) {
+            const record = landRecords.find(r => r.surveyNumber === surveyNumber);
+            if (record) {
+                alert(`Land Record Details\n\nSurvey Number: ${record.surveyNumber}\nOwner: ${record.owner}\nArea: ${record.area}\nLocation: ${record.location}\nStatus: ${record.verified ? 'Verified ✓' : 'Pending Verification'}\n\nRecord ID: LR${Math.random().toString().substr(2, 6)}`);
+            }
+        }
+    </script>
+  </body>
+</html>

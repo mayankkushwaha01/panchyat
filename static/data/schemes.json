@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Pradhan Mantri Awas Yojana (PMAY)",
+    "description": "Housing scheme to provide affordable housing to all eligible families by 2022.",
+    "eligibility": "Families with annual income up to Rs. 3 lakhs, no house ownership.",
+    "benefits": "Financial assistance up to Rs. 2.5 lakhs for house construction.",
+    "link": "https://pmaymis.gov.in/"
+  },
+  {
+    "name": "Mahatma Gandhi National Rural Employment Guarantee Act (MGNREGA)",
+    "description": "Employment scheme guaranteeing 100 days of wage employment to rural households.",
+    "eligibility": "Adult members of rural households willing to do unskilled manual work.",
+    "benefits": "Legal guarantee of 100 days of employment in a financial year.",
+    "link": "https://nrega.nic.in/"
+  },
+  {
+    "name": "Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)",
+    "description": "Income support scheme for farmers to supplement their financial needs.",
+    "eligibility": "All small and marginal farmers with cultivable landholding.",
+    "benefits": "Rs. 6,000 per year in three equal installments.",
+    "link": "https://pmkisan.gov.in/"
+  },
+  {
+    "name": "Swachh Bharat Mission (Gramin)",
+    "description": "Campaign to improve sanitation facilities in rural areas.",
+    "eligibility": "All rural households without toilets.",
+    "benefits": "Financial assistance for toilet construction and waste management.",
+    "link": "https://swachhbharatmission.gov.in/"
+  },
+  {
+    "name": "Pradhan Mantri Fasal Bima Yojana (PMFBY)",
+    "description": "Crop insurance scheme to provide financial support to farmers suffering crop loss/damage.",
+    "eligibility": "All farmers growing notified crops in notified areas.",
+    "benefits": "Insurance coverage and financial support in case of crop failure.",
+    "link": "https://pmfby.gov.in/"
+  },
+  {
+    "name": "National Rural Livelihood Mission (NRLM)",
+    "description": "Poverty alleviation program focused on promoting self-employment and organization of rural poor.",
+    "eligibility": "Rural poor, especially women self-help groups.",
+    "benefits": "Financial assistance, skill development, and market linkages.",
+    "link": "https://aajeevika.gov.in/"
+  },
+  {
+    "name": "Pradhan Mantri Jan Dhan Yojana",
+    "description": "Financial inclusion program to provide banking services to all households.",
+    "eligibility": "All Indian citizens above 10 years of age.",
+    "benefits": "Zero balance bank account, RuPay debit card, insurance coverage.",
+    "link": "https://www.pmjdy.gov.in/"
+  },
+  {
+    "name": "Ayushman Bharat - Pradhan Mantri Jan Arogya Yojana",
+    "description": "Health insurance scheme providing coverage up to Rs. 5 lakhs per family per year.",
+    "eligibility": "Families identified through Socio-Economic Caste Census (SECC) 2011.",
+    "benefits": "Cashless treatment up to Rs. 5 lakhs per family per year.",
+    "link": "https://pmjay.gov.in/"
+  },
+  {
+    "name": "Pradhan Mantri Ujjwala Yojana",
+    "description": "LPG connection scheme for women from BPL households.",
+    "eligibility": "Women from BPL families, SC/ST, PMAY, AAY beneficiaries.",
+    "benefits": "Free LPG connection with financial assistance for refills.",
+    "link": "https://www.pmujjwalayojana.com/"
+  },
+  {
+    "name": "Pradhan Mantri Mudra Yojana",
+    "description": "Micro-finance scheme to provide loans to small businesses and entrepreneurs.",
+    "eligibility": "Non-corporate, non-farm small/micro enterprises.",
+    "benefits": "Collateral-free loans up to Rs. 10 lakhs.",
+    "link": "https://www.mudra.org.in/"
+  },
+  {
+    "name": "National Social Assistance Programme (NSAP)",
+    "description": "Social security scheme for elderly, widows, and disabled persons.",
+    "eligibility": "BPL families with elderly (60+), widows, disabled persons.",
+    "benefits": "Monthly pension ranging from Rs. 200 to Rs. 500.",
+    "link": "https://nsap.nic.in/"
+  },
+  {
+    "name": "Pradhan Mantri Gram Sadak Yojana (PMGSY)",
+    "description": "Rural road connectivity program to connect villages with all-weather roads.",
+    "eligibility": "Villages with population 500+ (250+ in hilly/tribal areas).",
+    "benefits": "All-weather road connectivity to improve rural accessibility.",
+    "link": "https://pmgsy.nic.in/"
+  },
+  {
+    "name": "Mid Day Meal Scheme",
+    "description": "School meal program to improve nutritional status of school children.",
+    "eligibility": "Children studying in government and aided schools (Classes I-VIII).",
+    "benefits": "Free cooked meals during school days.",
+    "link": "https://mdm.gov.in/"
+  },
+  {
+    "name": "Beti Bachao Beti Padhao",
+    "description": "Scheme to address declining child sex ratio and promote girl child education.",
+    "eligibility": "All girl children and their families.",
+    "benefits": "Awareness campaigns, educational support, and financial incentives.",
+    "link": "https://wcd.nic.in/bbbp-scheme"
+  },
+  {
+    "name": "Pradhan Mantri Krishi Sinchai Yojana",
+    "description": "Irrigation scheme to expand cultivated area with assured irrigation.",
+    "eligibility": "All farmers, with focus on small and marginal farmers.",
+    "benefits": "Financial assistance for micro-irrigation and water conservation.",
+    "link": "https://pmksy.gov.in/"
+  },
+  {
+    "name": "Stand Up India",
+    "description": "Scheme to promote entrepreneurship among SC/ST and women entrepreneurs.",
+    "eligibility": "SC/ST and women entrepreneurs aged 18 years and above.",
+    "benefits": "Bank loans between Rs. 10 lakhs to Rs. 1 crore.",
+    "link": "https://www.standupmitra.in/"
+  }
+]
